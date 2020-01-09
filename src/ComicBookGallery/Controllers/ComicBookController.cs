@@ -8,5 +8,10 @@ namespace ComicBookGallery.Controllers
 {
     public class ComicBookController : Controller
     {
+        public string Detail()
+        {
+
+            return "HELLO from the comic book controller";
+        }
     }
 }
