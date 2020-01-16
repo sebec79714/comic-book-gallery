@@ -1,4 +1,5 @@
-﻿using ComicBookGallery.Models;
+﻿using ComicBookGallery.Data;
+using ComicBookGallery.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,21 @@ namespace ComicBookGallery.Controllers
 {
     public class ComicBookController : Controller
     {
-        public ActionResult Detail()
+        private ComicBookRepository _comicBookRepository = null;
+
+        public ComicBookController()
         {
-            var comicBook = new ComicBook()
+            _comicBookRepository = new ComicBookRepository();
+        }
+        public ActionResult Detail(int? Id) //int? means its nullable
+        {
+            if (Id == null)
+            {
+                return HttpNotFound();
+            }
+            var comicBook = _comicBookRepository.GetComicBook(Id.Value); //can also do an impliciate cast (int)Id
+
+  /*          var comicBook = new ComicBook()
             {
                 SeriesTitle = "The Amazing Spider-Man",
                 IssueNumber = 700,
@@ -38,7 +51,7 @@ namespace ComicBookGallery.Controllers
   //              "Colors: Edgar Delgado",
   //              "Letters: Chris Eliopoulos"
             };
-
+            */
             return View(comicBook);
 
         //    if (DateTime.Today.DayOfWeek == DayOfWeek.Thursday)
